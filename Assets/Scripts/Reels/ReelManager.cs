@@ -24,6 +24,7 @@ namespace SlotMachine.Reels
         [SerializeField] private float reelStopInterval = 0.5f;
 
         public event Action<int> OnSingleReelStopped;
+        public event Action<int> OnSingleReelLocking;
         public event Action<SymbolId[,]> OnAllReelsStopped;
 
         public bool IsSpinning { get; private set; }
@@ -38,6 +39,7 @@ namespace SlotMachine.Reels
             {
                 reels[i].Initialize(i, symbols, rng);
                 reels[i].OnReelStopped += HandleReelStopped;
+                reels[i].OnReelLocking += HandleReelLocking;
             }
         }
 
@@ -48,8 +50,14 @@ namespace SlotMachine.Reels
                 if (reels[i] != null)
                 {
                     reels[i].OnReelStopped -= HandleReelStopped;
+                    reels[i].OnReelLocking -= HandleReelLocking;
                 }
             }
+        }
+
+        private void HandleReelLocking(int reelIndex)
+        {
+            OnSingleReelLocking?.Invoke(reelIndex);
         }
 
         /// <summary>

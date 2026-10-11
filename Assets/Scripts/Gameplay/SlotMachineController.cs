@@ -55,7 +55,7 @@ namespace SlotMachine.Gameplay
             if (reelManager != null)
             {
                 reelManager.Initialize(symbolDefinitions, _rng);
-                reelManager.OnSingleReelStopped += HandleSingleReelStopped;
+                reelManager.OnSingleReelLocking += HandleSingleReelStopped;
                 reelManager.OnAllReelsStopped += HandleAllReelsStopped;
             }
 

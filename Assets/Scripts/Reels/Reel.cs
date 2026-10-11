@@ -32,6 +32,7 @@ namespace SlotMachine.Reels
         [SerializeField] private List<ReelSymbol> symbolSlots = new List<ReelSymbol>();
 
         public event Action<int, SymbolId[]> OnReelStopped;
+        public event Action<int> OnReelLocking; // Fires the instant deceleration & latch begins
 
         public bool IsSpinning { get; private set; }
         public int ReelIndex => reelIndex;
@@ -140,7 +141,9 @@ namespace SlotMachine.Reels
                 yield return null;
             }
 
-            // 3. Stop requested: Inject target symbols and snap into place
+            // 3. Stop requested: Trigger audio immediately at the moment the reel latches/locks
+            OnReelLocking?.Invoke(reelIndex);
+
             // Feed the target symbols: Slot 1 -> Top, Slot 2 -> Middle, Slot 3 -> Bottom
             // We align symbols so target outcome cleanly settles at resting positions.
             yield return StartCoroutine(SettleToTarget(_targetOutcome, currentSpeed));
