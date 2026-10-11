@@ -206,8 +206,7 @@ namespace SlotMachine.Gameplay
                 }
                 else
                 {
-                    string lineSummary = result.winningLines.Count > 0 ? result.winningLines[0].lineName : "WIN";
-                    uiManager?.SetMessage($"WINNER! {result.winningLines.Count} LINE(S) HIT! +{result.totalPayout:N0} CREDITS!", Color.green);
+                    uiManager?.SetMessage($"WINNER! MATCH ON CENTER ROW! +{result.totalPayout:N0} CREDITS!", Color.green);
                 }
 
                 // Check for Free Spins bonus trigger

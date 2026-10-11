@@ -37,22 +37,14 @@ namespace SlotMachine.Gameplay
     {
         private readonly Dictionary<SymbolId, SymbolDefinition> _symbolDefs = new Dictionary<SymbolId, SymbolDefinition>();
 
-        // 5 standard paylines coordinates: [reel, row] for 3 reels
+        // Classic single center payline (Row 1: Middle line across all 3 reels)
         private static readonly Vector2Int[][] Paylines = new Vector2Int[][]
         {
-            // Middle line (Row 1)
-            new Vector2Int[] { new Vector2Int(0, 1), new Vector2Int(1, 1), new Vector2Int(2, 1) },
-            // Top line (Row 0)
-            new Vector2Int[] { new Vector2Int(0, 0), new Vector2Int(1, 0), new Vector2Int(2, 0) },
-            // Bottom line (Row 2)
-            new Vector2Int[] { new Vector2Int(0, 2), new Vector2Int(1, 2), new Vector2Int(2, 2) },
-            // Diagonal Down (Top-Left to Bottom-Right)
-            new Vector2Int[] { new Vector2Int(0, 0), new Vector2Int(1, 1), new Vector2Int(2, 2) },
-            // Diagonal Up (Bottom-Left to Top-Right)
-            new Vector2Int[] { new Vector2Int(0, 2), new Vector2Int(1, 1), new Vector2Int(2, 0) }
+            // Center payline (Middle row)
+            new Vector2Int[] { new Vector2Int(0, 1), new Vector2Int(1, 1), new Vector2Int(2, 1) }
         };
 
-        private static readonly string[] PaylineNames = { "Middle Row", "Top Row", "Bottom Row", "Diagonal Down", "Diagonal Up" };
+        private static readonly string[] PaylineNames = { "Middle Row" };
 
         public PaylineEvaluator(IEnumerable<SymbolDefinition> definitions)
         {
@@ -74,20 +66,17 @@ namespace SlotMachine.Gameplay
             var result = new SpinEvaluationResult();
             int bonusSymbolCount = 0;
 
-            // Count bonus symbols anywhere on the grid for scatter / free spins
+            // Check for bonus (Bell) symbols on the center payline for Free Spins trigger
             for (int reel = 0; reel < 3; reel++)
             {
-                for (int row = 0; row < 3; row++)
+                SymbolId id = matrix[reel, 1]; // Middle row
+                if (_symbolDefs.TryGetValue(id, out var def) && def.isBonus)
                 {
-                    SymbolId id = matrix[reel, row];
-                    if (_symbolDefs.TryGetValue(id, out var def) && def.isBonus)
-                    {
-                        bonusSymbolCount++;
-                    }
+                    bonusSymbolCount++;
                 }
             }
 
-            // 3 or more bonus symbols trigger 5 Free Spins
+            // 3 matching bonus symbols on the middle row trigger 5 Free Spins
             if (bonusSymbolCount >= 3)
             {
                 result.triggersFreeSpins = true;

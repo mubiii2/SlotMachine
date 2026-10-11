@@ -9,9 +9,9 @@ An interactive, responsive 3-reel retro casino slot machine developed in **Unity
 ### Core Mechanics
 - **3-Reel Classic Format**: 3 visible rows (Top, Middle, Bottom) across 3 spinning reels.
 - **Payline Evaluation**:
-  - **Middle Row** (Primary horizontal payline)
-  - **Top Row** & **Bottom Row** (Horizontal paylines)
-  - **Diagonals** (Top-Left to Bottom-Right, Bottom-Left to Top-Right)
+  - **Center Payline (Middle Row)**: Matches evaluate across the middle horizontal payline, exactly following classic single-line slot mechanics.
+  - Matches across all 3 reels on the center row award the symbol multiplier.
+  - 3 Bonus Bells on the center row trigger Free Spins.
 - **Winning Combinations & Multipliers**:
   - ⭐ **WILD Star**: **150x Bet** (Substitutes for *all* symbols!)
   - 7️⃣ **Lucky 7 (Jackpot)**: **100x Bet** (Mega Jackpot celebration)
