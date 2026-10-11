@@ -80,7 +80,7 @@ namespace SlotMachine.Editor
             cam.orthographicSize = 5f;
             camGo.transform.position = new Vector3(0, 0, -10);
 
-            // 2. Event System with InputSystemUIInputModule (fixes Input System exception)
+            // 2. Event System with InputSystemUIInputModule
             var eventSystemGo = new GameObject("EventSystem");
             eventSystemGo.AddComponent<EventSystem>();
             eventSystemGo.AddComponent<InputSystemUIInputModule>();
@@ -112,6 +112,7 @@ namespace SlotMachine.Editor
             var sBell = LoadSprite("Assets/Art/Sprites/slot-symbol3.png");
             var sBar = LoadSprite("Assets/Art/Sprites/slot-symbol4.png");
             var sWild = LoadSprite("Assets/Art/Sprites/slot-symbol5_wild.png");
+            var reelBgSprite = LoadSprite("Assets/Art/Sprites/reel_background.png");
 
             var symbolDefs = new List<SymbolDefinition>
             {
@@ -128,14 +129,7 @@ namespace SlotMachine.Editor
             machineRootRect.anchoredPosition = new Vector2(0, 90f);
             machineRootRect.sizeDelta = new Vector2(816, 624);
 
-            // 5a. Backdrop (slot-machine5.png - reel background)
-            var backdropGo = CreateUIObject("ReelsBackdrop", machineRoot.transform);
-            var backdropRect = backdropGo.GetComponent<RectTransform>();
-            backdropRect.sizeDelta = new Vector2(816, 624);
-            var backdropImg = backdropGo.AddComponent<Image>();
-            backdropImg.sprite = LoadSprite("Assets/Art/Sprites/slot-machine5.png");
-
-            // 5b. Reels Mask Container (covers [229, 246] to [596, 455])
+            // 5a. Reels Mask Container (covers [229, 246] to [596, 455])
             var reelsMaskGo = CreateUIObject("ReelsWindow_Mask", machineRoot.transform);
             var reelsMaskRect = reelsMaskGo.GetComponent<RectTransform>();
             reelsMaskRect.anchoredPosition = new Vector2(4.5f, -38.5f);
@@ -144,6 +138,9 @@ namespace SlotMachine.Editor
 
             // ReelManager setup
             var reelManagerGo = CreateUIObject("ReelManager", reelsMaskGo.transform);
+            var reelManagerRect = reelManagerGo.GetComponent<RectTransform>();
+            reelManagerRect.anchoredPosition = Vector2.zero;
+            reelManagerRect.sizeDelta = new Vector2(372, 210);
             var reelManager = reelManagerGo.AddComponent<ReelManager>();
             var reelsList = new List<Reel>();
 
@@ -155,15 +152,26 @@ namespace SlotMachine.Editor
                 reelRect.anchoredPosition = new Vector2(reelXPositions[r], 0f);
                 reelRect.sizeDelta = new Vector2(108, 210);
 
+                // Per-reel background cut from slot-machine5.png
+                var reelBgGo = CreateUIObject("Reel_BG", reelGo.transform);
+                var reelBgRect = reelBgGo.GetComponent<RectTransform>();
+                reelBgRect.anchoredPosition = Vector2.zero;
+                reelBgRect.sizeDelta = new Vector2(108, 210);
+                var reelBgImg = reelBgGo.AddComponent<Image>();
+                reelBgImg.sprite = reelBgSprite;
+                reelBgImg.raycastTarget = false;
+
                 var reel = reelGo.AddComponent<Reel>();
                 var slots = new List<ReelSymbol>();
 
-                // Create 5 symbol slots (-2, -1, 0, 1, 2)
+                // Create 5 symbol slots with increased spacing (rowHeight = 105f)
+                float rowHeight = 105f;
                 for (int s = 0; s < 5; s++)
                 {
                     var slotGo = CreateUIObject($"Slot_{s}", reelGo.transform);
                     var slotRect = slotGo.GetComponent<RectTransform>();
-                    slotRect.sizeDelta = new Vector2(96, 96);
+                    slotRect.anchoredPosition = new Vector2(0f, (2 - s) * rowHeight);
+                    slotRect.sizeDelta = new Vector2(88, 88);
                     var slotImg = slotGo.AddComponent<Image>();
                     slotImg.preserveAspect = true;
                     var symbolSlot = slotGo.AddComponent<ReelSymbol>();
@@ -175,7 +183,7 @@ namespace SlotMachine.Editor
                 reelsList.Add(reel);
             }
 
-            // 5c. Machine Frame Overlay (slot-machine4.png)
+            // 5b. Machine Frame Overlay (slot-machine4.png)
             var frameOverlayGo = CreateUIObject("MachineFrameOverlay", machineRoot.transform);
             var frameOverlayRect = frameOverlayGo.GetComponent<RectTransform>();
             frameOverlayRect.sizeDelta = new Vector2(816, 624);
@@ -183,7 +191,7 @@ namespace SlotMachine.Editor
             frameOverlayImg.sprite = LoadSprite("Assets/Art/Sprites/slot-machine4.png");
             frameOverlayImg.raycastTarget = false;
 
-            // 5d. Interactive Lever - Accurately sized to the lever handle (92x270)
+            // 5c. Interactive Lever - Accurately sized to the lever handle (92x270)
             var leverGo = CreateUIObject("Lever", machineRoot.transform);
             var leverRect = leverGo.GetComponent<RectTransform>();
             leverRect.anchoredPosition = new Vector2(310.5f, -118.5f);

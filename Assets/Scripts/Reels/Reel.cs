@@ -15,7 +15,8 @@ namespace SlotMachine.Reels
     {
         [Header("Reel Configuration")]
         [SerializeField] private int reelIndex = 0;
-        [SerializeField] private float rowHeight = 70f;
+        [Tooltip("Vertical spacing between adjacent symbol centers. Increase to add more breathing space.")]
+        [SerializeField] private float rowHeight = 105f; // Increased spacing so symbols never overlap
         [SerializeField] private int visibleRows = 3; // Top, Middle, Bottom
         [SerializeField] private int totalSymbolSlots = 5; // 3 visible + 2 buffers (1 above, 1 below)
 
