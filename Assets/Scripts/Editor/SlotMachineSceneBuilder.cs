@@ -10,6 +10,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 namespace SlotMachine.Editor
@@ -79,10 +80,10 @@ namespace SlotMachine.Editor
             cam.orthographicSize = 5f;
             camGo.transform.position = new Vector3(0, 0, -10);
 
-            // 2. Event System
+            // 2. Event System with InputSystemUIInputModule (fixes Input System exception)
             var eventSystemGo = new GameObject("EventSystem");
             eventSystemGo.AddComponent<EventSystem>();
-            eventSystemGo.AddComponent<StandaloneInputModule>();
+            eventSystemGo.AddComponent<InputSystemUIInputModule>();
 
             // 3. Canvas
             var canvasGo = new GameObject("Canvas");
@@ -135,7 +136,6 @@ namespace SlotMachine.Editor
             backdropImg.sprite = LoadSprite("Assets/Art/Sprites/slot-machine5.png");
 
             // 5b. Reels Mask Container (covers [229, 246] to [596, 455])
-            // Center is (4.5, -38.5), size is (372, 210)
             var reelsMaskGo = CreateUIObject("ReelsWindow_Mask", machineRoot.transform);
             var reelsMaskRect = reelsMaskGo.GetComponent<RectTransform>();
             reelsMaskRect.anchoredPosition = new Vector2(4.5f, -38.5f);
@@ -183,16 +183,22 @@ namespace SlotMachine.Editor
             frameOverlayImg.sprite = LoadSprite("Assets/Art/Sprites/slot-machine4.png");
             frameOverlayImg.raycastTarget = false;
 
-            // 5d. Interactive Lever
+            // 5d. Interactive Lever - Accurately sized to the lever handle (92x270)
             var leverGo = CreateUIObject("Lever", machineRoot.transform);
             var leverRect = leverGo.GetComponent<RectTransform>();
-            leverRect.sizeDelta = new Vector2(816, 624);
+            leverRect.anchoredPosition = new Vector2(310.5f, -118.5f);
+            leverRect.sizeDelta = new Vector2(92f, 270f);
             var leverImg = leverGo.AddComponent<Image>();
-            leverImg.sprite = LoadSprite("Assets/Art/Sprites/slot-machine2.png");
+            leverImg.sprite = LoadSprite("Assets/Art/Sprites/lever_handle_up.png");
+            leverImg.preserveAspect = true;
             var leverController = leverGo.AddComponent<LeverController>();
-            leverController.SetSprites(
-                LoadSprite("Assets/Art/Sprites/slot-machine2.png"),
-                LoadSprite("Assets/Art/Sprites/slot-machine3.png")
+            leverController.Configure(
+                LoadSprite("Assets/Art/Sprites/lever_handle_up.png"),
+                LoadSprite("Assets/Art/Sprites/lever_handle_down.png"),
+                new Vector2(310.5f, -118.5f),
+                new Vector2(92f, 270f),
+                new Vector2(310.5f, -281.5f),
+                new Vector2(92f, 60f)
             );
 
             // 6. UI Controls & HUD
@@ -298,7 +304,7 @@ namespace SlotMachine.Editor
             var uiManager = gameManagerGo.AddComponent<UIManager>();
             var slotController = gameManagerGo.AddComponent<SlotMachineController>();
 
-            // Set UI Manager private serialized fields using reflection or public setup
+            // Set UI Manager private fields
             SetPrivateField(uiManager, "balanceText", balanceText);
             SetPrivateField(uiManager, "betText", betText);
             SetPrivateField(uiManager, "winText", winText);
@@ -328,15 +334,14 @@ namespace SlotMachine.Editor
             // Save Scene
             string scenePath = "Assets/Scenes/SlotMachineScene.unity";
             EditorSceneManager.SaveScene(newScene, scenePath);
-            Debug.Log($"<color=green>[SlotMachine]</color> Saved game scene at {scenePath}");
+            Debug.Log($"<color=green>[SlotMachine]</color> Saved updated game scene at {scenePath}");
 
-            // Configure EditorBuildSettings to include this scene
+            // Configure EditorBuildSettings
             var scenes = new EditorBuildSettingsScene[]
             {
                 new EditorBuildSettingsScene(scenePath, true)
             };
             EditorBuildSettings.scenes = scenes;
-            Debug.Log("<color=green>[SlotMachine]</color> Set SlotMachineScene as Build Scene 0!");
         }
 
         private static GameObject CreateStatBox(string name, Transform parent, Vector2 pos, string label, string defaultValue, out Text valText)
@@ -476,7 +481,6 @@ namespace SlotMachine.Editor
             titleText.color = Color.yellow;
             titleText.text = "★ PAYTABLE & GAME RULES ★";
 
-            // Add table of symbols
             float startY = 140f;
             for (int i = 0; i < symbols.Count; i++)
             {
@@ -510,7 +514,6 @@ namespace SlotMachine.Editor
                 descText.text = $"{symbols[i].displayName}: 3 of a kind = {symbols[i].threeMatchMultiplier}x Bet{cherryInfo}{bonusInfo}{wildInfo}";
             }
 
-            // Close Button
             var closeBtnGo = CreateUIObject("CloseButton", modalGo.transform);
             var closeRect = closeBtnGo.GetComponent<RectTransform>();
             closeRect.anchoredPosition = new Vector2(380, 230);
@@ -549,7 +552,6 @@ namespace SlotMachine.Editor
             titleText.color = Color.white;
             titleText.text = "OUT OF CREDITS!\n\nClaim 1,000 Free Bonus Credits?";
 
-            // Yes Button
             var yesGo = CreateUIObject("YesBtn", modalGo.transform);
             var yesRect = yesGo.GetComponent<RectTransform>();
             yesRect.anchoredPosition = new Vector2(-120, -70);
@@ -558,7 +560,6 @@ namespace SlotMachine.Editor
             yesImg.sprite = LoadSprite("Assets/Art/Sprites/btn_yes.png");
             yesBtn = yesGo.AddComponent<Button>();
 
-            // No Button
             var noGo = CreateUIObject("NoBtn", modalGo.transform);
             var noRect = noGo.GetComponent<RectTransform>();
             noRect.anchoredPosition = new Vector2(120, -70);

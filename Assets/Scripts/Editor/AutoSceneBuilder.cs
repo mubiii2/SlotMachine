@@ -1,4 +1,3 @@
-using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,6 +6,8 @@ namespace SlotMachine.Editor
     [InitializeOnLoad]
     public static class AutoSceneBuilder
     {
+        private const string VersionKey = "SlotMachine_SceneBuilt_v2_lever_fix";
+
         static AutoSceneBuilder()
         {
             EditorApplication.delayCall += OnEditorReady;
@@ -14,16 +15,12 @@ namespace SlotMachine.Editor
 
         private static void OnEditorReady()
         {
-            string scenePath = "Assets/Scenes/SlotMachineScene.unity";
-            if (!File.Exists(scenePath))
+            if (!SessionState.GetBool(VersionKey, false))
             {
-                Debug.Log("<color=yellow>[SlotMachine AutoBuilder]</color> Scene not found, building now...");
+                SessionState.SetBool(VersionKey, true);
+                Debug.Log("<color=yellow>[SlotMachine AutoBuilder]</color> Rebuilding scene with lever and input fixes...");
                 SlotMachineSceneBuilder.BuildScene();
-                Debug.Log("<color=green>[SlotMachine AutoBuilder]</color> Scene built successfully!");
-            }
-            else
-            {
-                Debug.Log("<color=cyan>[SlotMachine AutoBuilder]</color> SlotMachineScene already exists!");
+                Debug.Log("<color=green>[SlotMachine AutoBuilder]</color> Scene rebuild completed!");
             }
         }
     }

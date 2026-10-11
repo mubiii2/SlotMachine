@@ -8,8 +8,8 @@ using UnityEngine.UI;
 namespace SlotMachine.UI
 {
     /// <summary>
-    /// Interactive mechanical lever on the side of the slot machine.
-    /// Supports user click/drag interaction with realistic spring-loaded animation.
+    /// Interactive mechanical lever located on the right side of the slot machine cabinet.
+    /// Sized specifically to the lever handle dimensions (92x270) with spring-loaded animation.
     /// </summary>
     [RequireComponent(typeof(Image))]
     public class LeverController : MonoBehaviour, IPointerClickHandler
@@ -17,6 +17,12 @@ namespace SlotMachine.UI
         [Header("Sprites")]
         [SerializeField] private Sprite leverUpSprite;
         [SerializeField] private Sprite leverDownSprite;
+
+        [Header("Positions & Sizing")]
+        [SerializeField] private Vector2 upPosition = new Vector2(310.5f, -118.5f);
+        [SerializeField] private Vector2 upSize = new Vector2(92f, 270f);
+        [SerializeField] private Vector2 downPosition = new Vector2(310.5f, -281.5f);
+        [SerializeField] private Vector2 downSize = new Vector2(92f, 60f);
 
         [Header("Animation Settings")]
         [SerializeField] private float pullDuration = 0.12f;
@@ -28,15 +34,43 @@ namespace SlotMachine.UI
         public bool IsInteractable { get; set; } = true;
 
         private Image _leverImage;
+        private RectTransform _rectTransform;
         private bool _isPulling;
         private Coroutine _pullCoroutine;
 
         private void Awake()
         {
             _leverImage = GetComponent<Image>();
-            if (leverUpSprite != null && _leverImage != null)
+            _rectTransform = GetComponent<RectTransform>();
+
+            SetToUpPosition();
+        }
+
+        public void SetToUpPosition()
+        {
+            if (_rectTransform != null)
+            {
+                _rectTransform.anchoredPosition = upPosition;
+                _rectTransform.sizeDelta = upSize;
+            }
+            if (_leverImage != null && leverUpSprite != null)
             {
                 _leverImage.sprite = leverUpSprite;
+                _leverImage.preserveAspect = true;
+            }
+        }
+
+        public void SetToDownPosition()
+        {
+            if (_rectTransform != null)
+            {
+                _rectTransform.anchoredPosition = downPosition;
+                _rectTransform.sizeDelta = downSize;
+            }
+            if (_leverImage != null && leverDownSprite != null)
+            {
+                _leverImage.sprite = leverDownSprite;
+                _leverImage.preserveAspect = true;
             }
         }
 
@@ -62,33 +96,28 @@ namespace SlotMachine.UI
             SoundManager.Instance?.PlayLeverPull();
             OnLeverPulled?.Invoke();
 
-            // Switch to pulled-down sprite
-            if (_leverImage != null && leverDownSprite != null)
-            {
-                _leverImage.sprite = leverDownSprite;
-            }
+            // Switch to pulled-down state
+            SetToDownPosition();
 
             yield return new WaitForSeconds(holdDuration);
 
-            // Return to up position
-            if (_leverImage != null && leverUpSprite != null)
-            {
-                _leverImage.sprite = leverUpSprite;
-            }
+            // Return to up state with quick spring
+            SetToUpPosition();
 
             yield return new WaitForSeconds(returnDuration);
             _isPulling = false;
             _pullCoroutine = null;
         }
 
-        public void SetSprites(Sprite up, Sprite down)
+        public void Configure(Sprite up, Sprite down, Vector2 posUp, Vector2 sizeUp, Vector2 posDown, Vector2 sizeDown)
         {
             leverUpSprite = up;
             leverDownSprite = down;
-            if (_leverImage != null && leverUpSprite != null)
-            {
-                _leverImage.sprite = leverUpSprite;
-            }
+            upPosition = posUp;
+            upSize = sizeUp;
+            downPosition = posDown;
+            downSize = sizeDown;
+            SetToUpPosition();
         }
     }
 }
