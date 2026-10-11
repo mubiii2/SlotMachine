@@ -2,6 +2,8 @@
 
 An interactive, responsive 3-reel retro casino slot machine developed in **Unity 6 (6000.3.19f1)** adhering to strict Object-Oriented Programming (OOP) principles, clean architecture, fair weighted Random Number Generation (RNG), and realistic mechanical reel physics.
 
+🎮 **[Play Live WebGL Demo on Unity Play](https://play.unity.com/en/games/b54c2347-a4b3-42d3-8a46-07c235912685/webgl)**
+
 ---
 
 ## 🎮 Live Game Overview & Features
