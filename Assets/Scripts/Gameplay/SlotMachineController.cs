@@ -206,7 +206,7 @@ namespace SlotMachine.Gameplay
                 }
                 else
                 {
-                    uiManager?.SetMessage($"WINNER! MATCH ON CENTER ROW! +{result.totalPayout:N0} CREDITS!", Color.green);
+                    uiManager?.SetMessage($"WINNER! +{result.totalPayout:N0} CREDITS!", Color.green);
                 }
 
                 // Check for Free Spins bonus trigger
