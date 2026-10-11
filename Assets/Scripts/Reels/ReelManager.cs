@@ -18,10 +18,10 @@ namespace SlotMachine.Reels
 
         [Header("Timing Configuration")]
         [Tooltip("Minimum duration in seconds before the first reel begins stopping")]
-        [SerializeField] private float minSpinDuration = 1.0f;
+        [SerializeField] private float minSpinDuration = 2.2f;
 
         [Tooltip("Delay in seconds between successive reel stops")]
-        [SerializeField] private float reelStopInterval = 0.35f;
+        [SerializeField] private float reelStopInterval = 0.5f;
 
         public event Action<int> OnSingleReelStopped;
         public event Action<SymbolId[,]> OnAllReelsStopped;

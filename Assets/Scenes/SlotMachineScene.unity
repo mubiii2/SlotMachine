@@ -3110,8 +3110,8 @@ MonoBehaviour:
   - {fileID: 323402244}
   - {fileID: 523077761}
   - {fileID: 514795044}
-  minSpinDuration: 1
-  reelStopInterval: 0.35
+  minSpinDuration: 2.2
+  reelStopInterval: 0.5
 --- !u!224 &851258224
 RectTransform:
   m_ObjectHideFlags: 0

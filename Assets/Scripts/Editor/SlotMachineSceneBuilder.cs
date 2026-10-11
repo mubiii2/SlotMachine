@@ -142,6 +142,8 @@ namespace SlotMachine.Editor
             reelManagerRect.anchoredPosition = Vector2.zero;
             reelManagerRect.sizeDelta = new Vector2(490.8329f, 210f);
             var reelManager = reelManagerGo.AddComponent<ReelManager>();
+            SetPrivateField(reelManager, "minSpinDuration", 2.2f);
+            SetPrivateField(reelManager, "reelStopInterval", 0.5f);
             var reelsList = new List<Reel>();
 
             float[] reelXPositions = { -171.1f, 0f, 172.2f };
