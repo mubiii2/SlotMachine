@@ -132,15 +132,15 @@ namespace SlotMachine.Editor
             // 5a. Reels Mask Container
             var reelsMaskGo = CreateUIObject("ReelsWindow_Mask", machineRoot.transform);
             var reelsMaskRect = reelsMaskGo.GetComponent<RectTransform>();
-            reelsMaskRect.anchoredPosition = new Vector2(-42.79f, -38.5f);
-            reelsMaskRect.sizeDelta = new Vector2(490.83f, 210f);
+            reelsMaskRect.anchoredPosition = new Vector2(-42.790535f, -38.5f);
+            reelsMaskRect.sizeDelta = new Vector2(490.8329f, 210f);
             reelsMaskGo.AddComponent<RectMask2D>();
 
             // ReelManager setup
             var reelManagerGo = CreateUIObject("ReelManager", reelsMaskGo.transform);
             var reelManagerRect = reelManagerGo.GetComponent<RectTransform>();
             reelManagerRect.anchoredPosition = Vector2.zero;
-            reelManagerRect.sizeDelta = new Vector2(490.83f, 210f);
+            reelManagerRect.sizeDelta = new Vector2(490.8329f, 210f);
             var reelManager = reelManagerGo.AddComponent<ReelManager>();
             var reelsList = new List<Reel>();
 
