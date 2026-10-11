@@ -71,7 +71,7 @@ namespace SlotMachine.Editor
             // Create a new clean scene
             var newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
-            // 1. Camera
+            // 1. Camera with AudioListener
             var camGo = new GameObject("Main Camera");
             var cam = camGo.AddComponent<Camera>();
             cam.clearFlags = CameraClearFlags.SolidColor;
@@ -79,6 +79,7 @@ namespace SlotMachine.Editor
             cam.orthographic = true;
             cam.orthographicSize = 5f;
             camGo.transform.position = new Vector3(0, 0, -10);
+            camGo.AddComponent<AudioListener>();
 
             // 2. Event System with InputSystemUIInputModule
             var eventSystemGo = new GameObject("EventSystem");

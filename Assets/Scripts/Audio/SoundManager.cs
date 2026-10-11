@@ -44,9 +44,27 @@ namespace SlotMachine.Audio
 
         private void SetupAudioSources()
         {
+            // Ensure an AudioListener exists in the scene so audio can actually be heard!
+            if (FindAnyObjectByType<AudioListener>() == null)
+            {
+                var mainCam = Camera.main;
+                if (mainCam != null)
+                {
+                    mainCam.gameObject.AddComponent<AudioListener>();
+                }
+                else
+                {
+                    gameObject.AddComponent<AudioListener>();
+                }
+            }
+
             if (sfxSource == null) sfxSource = gameObject.AddComponent<AudioSource>();
             if (spinLoopSource == null) spinLoopSource = gameObject.AddComponent<AudioSource>();
             if (winSource == null) winSource = gameObject.AddComponent<AudioSource>();
+
+            sfxSource.spatialBlend = 0f; // Pure 2D
+            spinLoopSource.spatialBlend = 0f;
+            winSource.spatialBlend = 0f;
 
             spinLoopSource.loop = true;
             spinLoopSource.playOnAwake = false;
@@ -68,13 +86,13 @@ namespace SlotMachine.Audio
         public void PlayButtonClick()
         {
             if (buttonClickClip != null && sfxSource != null)
-                sfxSource.PlayOneShot(buttonClickClip, 0.7f);
+                sfxSource.PlayOneShot(buttonClickClip, 1.0f);
         }
 
         public void PlayLeverPull()
         {
             if (leverPullClip != null && sfxSource != null)
-                sfxSource.PlayOneShot(leverPullClip, 0.85f);
+                sfxSource.PlayOneShot(leverPullClip, 1.0f);
         }
 
         public void StartReelSpinSound()
@@ -82,7 +100,7 @@ namespace SlotMachine.Audio
             if (reelSpinLoopClip != null && spinLoopSource != null)
             {
                 spinLoopSource.clip = reelSpinLoopClip;
-                spinLoopSource.volume = 0.5f;
+                spinLoopSource.volume = 0.85f;
                 spinLoopSource.Play();
             }
         }
@@ -96,13 +114,13 @@ namespace SlotMachine.Audio
         public void PlayReelStop()
         {
             if (reelStopClip != null && sfxSource != null)
-                sfxSource.PlayOneShot(reelStopClip, 0.75f);
+                sfxSource.PlayOneShot(reelStopClip, 1.0f);
         }
 
         public void PlayCoinCount()
         {
             if (coinCountClip != null && sfxSource != null)
-                sfxSource.PlayOneShot(coinCountClip, 0.6f);
+                sfxSource.PlayOneShot(coinCountClip, 0.9f);
         }
 
         public void PlayWin(bool isJackpot)
@@ -110,7 +128,7 @@ namespace SlotMachine.Audio
             if (winSource == null) return;
             AudioClip clip = isJackpot ? winJackpotClip : winSmallClip;
             if (clip != null)
-                winSource.PlayOneShot(clip, 0.9f);
+                winSource.PlayOneShot(clip, 1.0f);
         }
 
         #region Procedural Audio Clip Synthesizers

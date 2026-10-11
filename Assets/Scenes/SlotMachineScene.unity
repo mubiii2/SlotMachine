@@ -783,6 +783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 173840799}
   - component: {fileID: 173840798}
+  - component: {fileID: 173840800}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -6736,6 +6737,14 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113364838}
   m_CullTransparentMesh: 1
+--- !u!81 &173840800
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173840797}
+  m_Enabled: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
