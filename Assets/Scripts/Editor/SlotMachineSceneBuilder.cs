@@ -129,34 +129,34 @@ namespace SlotMachine.Editor
             machineRootRect.anchoredPosition = new Vector2(0, 90f);
             machineRootRect.sizeDelta = new Vector2(816, 624);
 
-            // 5a. Reels Mask Container (covers [229, 246] to [596, 455])
+            // 5a. Reels Mask Container
             var reelsMaskGo = CreateUIObject("ReelsWindow_Mask", machineRoot.transform);
             var reelsMaskRect = reelsMaskGo.GetComponent<RectTransform>();
-            reelsMaskRect.anchoredPosition = new Vector2(4.5f, -38.5f);
-            reelsMaskRect.sizeDelta = new Vector2(372, 210);
+            reelsMaskRect.anchoredPosition = new Vector2(-42.79f, -38.5f);
+            reelsMaskRect.sizeDelta = new Vector2(490.83f, 210f);
             reelsMaskGo.AddComponent<RectMask2D>();
 
             // ReelManager setup
             var reelManagerGo = CreateUIObject("ReelManager", reelsMaskGo.transform);
             var reelManagerRect = reelManagerGo.GetComponent<RectTransform>();
             reelManagerRect.anchoredPosition = Vector2.zero;
-            reelManagerRect.sizeDelta = new Vector2(372, 210);
+            reelManagerRect.sizeDelta = new Vector2(490.83f, 210f);
             var reelManager = reelManagerGo.AddComponent<ReelManager>();
             var reelsList = new List<Reel>();
 
-            float[] reelXPositions = { -130f, 0f, 130f }; // 3 columns spaced 130px apart
+            float[] reelXPositions = { -171.1f, 0f, 172.2f };
             for (int r = 0; r < 3; r++)
             {
                 var reelGo = CreateUIObject($"Reel_{r}", reelManagerGo.transform);
                 var reelRect = reelGo.GetComponent<RectTransform>();
                 reelRect.anchoredPosition = new Vector2(reelXPositions[r], 0f);
-                reelRect.sizeDelta = new Vector2(108, 210);
+                reelRect.sizeDelta = new Vector2(143.5f, 210f);
 
                 // Per-reel background cut from slot-machine5.png
                 var reelBgGo = CreateUIObject("Reel_BG", reelGo.transform);
                 var reelBgRect = reelBgGo.GetComponent<RectTransform>();
                 reelBgRect.anchoredPosition = Vector2.zero;
-                reelBgRect.sizeDelta = new Vector2(108, 210);
+                reelBgRect.sizeDelta = new Vector2(108f, 210f);
                 var reelBgImg = reelBgGo.AddComponent<Image>();
                 reelBgImg.sprite = reelBgSprite;
                 reelBgImg.raycastTarget = false;
