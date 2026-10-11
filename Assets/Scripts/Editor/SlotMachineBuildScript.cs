@@ -13,8 +13,12 @@ namespace SlotMachine.Editor
         {
             Debug.Log("<color=cyan>[SlotMachine Build]</color> Starting WebGL Build process...");
 
-            // Ensure sprites and scene are configured first
-            SlotMachineSceneBuilder.BuildScene();
+            // Build the current configured scene
+            string scenePath = "Assets/Scenes/SlotMachineScene.unity";
+            if (!File.Exists(scenePath))
+            {
+                SlotMachineSceneBuilder.BuildScene();
+            }
 
             string buildDir = Path.Combine(Directory.GetCurrentDirectory(), "Build", "WebGL");
             if (!Directory.Exists(buildDir))

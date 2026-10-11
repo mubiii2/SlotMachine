@@ -857,6 +857,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &173840800
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173840797}
+  m_Enabled: 1
 --- !u!1 &191105020
 GameObject:
   m_ObjectHideFlags: 0
@@ -4951,7 +4959,7 @@ MonoBehaviour:
   spinLoopSource: {fileID: 0}
   winSource: {fileID: 0}
   buttonClickClip: {fileID: 8300000, guid: 20053554c1a713f43b698fa64d19f5bc, type: 3}
-  leverPullClip: {fileID: 8300000, guid: d01908e278afe42429f6a83d876dd174, type: 3}
+  leverPullClip: {fileID: 8300000, guid: 4386472d989c48c41b85898ea6fed565, type: 3}
   reelSpinLoopClip: {fileID: 8300000, guid: 9d5f148a180d0b74f8de51c68febb16e, type: 3}
   reelStopClip: {fileID: 8300000, guid: 3d4632c4c51be8a4380d552cfc3f09e1, type: 3}
   coinCountClip: {fileID: 8300000, guid: 2ebdb965a7a49d247b6f57c7c4697b15, type: 3}
@@ -6738,14 +6746,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113364838}
   m_CullTransparentMesh: 1
---- !u!81 &173840800
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 173840797}
-  m_Enabled: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
