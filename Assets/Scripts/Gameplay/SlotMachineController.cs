@@ -215,6 +215,7 @@ namespace SlotMachine.Gameplay
                     playerWallet?.AddFreeSpins(result.freeSpinsAwarded);
                     uiManager?.SetFreeSpinsBanner(true, playerWallet.FreeSpinsRemaining);
                     uiManager?.SetMessage($"BONUS ACTIVATED! {result.freeSpinsAwarded} FREE SPINS AWARDED (2X WINS)!", Color.cyan);
+                    soundManager?.PlayBonusTrigger();
                 }
 
                 yield return new WaitForSeconds(1.4f);

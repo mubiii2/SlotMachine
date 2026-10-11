@@ -308,6 +308,14 @@ namespace SlotMachine.Editor
             // 11. Audio Setup
             var audioGo = new GameObject("SoundManager");
             var soundManager = audioGo.AddComponent<SoundManager>();
+            SetPrivateField(soundManager, "buttonClickClip", AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/SFX/button_click.mp3"));
+            SetPrivateField(soundManager, "leverPullClip", AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/SFX/lever_pull.mp3"));
+            SetPrivateField(soundManager, "reelSpinLoopClip", AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/SFX/reel_spin_loop.mp3"));
+            SetPrivateField(soundManager, "reelStopClip", AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/SFX/reel_stop.mp3"));
+            SetPrivateField(soundManager, "coinCountClip", AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/SFX/coin_tick.mp3"));
+            SetPrivateField(soundManager, "winSmallClip", AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/SFX/win_standard.mp3"));
+            SetPrivateField(soundManager, "winJackpotClip", AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/SFX/win_jackpot.mp3"));
+            SetPrivateField(soundManager, "bonusTriggerClip", AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/SFX/bonus_trigger.mp3"));
 
             // 12. Gameplay Logic Setup
             var gameManagerGo = new GameObject("GameManager");

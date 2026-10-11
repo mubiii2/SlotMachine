@@ -25,6 +25,7 @@ namespace SlotMachine.Audio
         [SerializeField] private AudioClip coinCountClip;
         [SerializeField] private AudioClip winSmallClip;
         [SerializeField] private AudioClip winJackpotClip;
+        [SerializeField] private AudioClip bonusTriggerClip;
 
         private void Awake()
         {
@@ -129,6 +130,15 @@ namespace SlotMachine.Audio
             AudioClip clip = isJackpot ? winJackpotClip : winSmallClip;
             if (clip != null)
                 winSource.PlayOneShot(clip, 1.0f);
+        }
+
+        public void PlayBonusTrigger()
+        {
+            if (winSource == null) return;
+            if (bonusTriggerClip != null)
+                winSource.PlayOneShot(bonusTriggerClip, 1.0f);
+            else if (winJackpotClip != null)
+                winSource.PlayOneShot(winJackpotClip, 1.0f);
         }
 
         #region Procedural Audio Clip Synthesizers

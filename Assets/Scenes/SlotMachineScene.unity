@@ -4950,13 +4950,14 @@ MonoBehaviour:
   sfxSource: {fileID: 0}
   spinLoopSource: {fileID: 0}
   winSource: {fileID: 0}
-  buttonClickClip: {fileID: 0}
-  leverPullClip: {fileID: 0}
-  reelSpinLoopClip: {fileID: 0}
-  reelStopClip: {fileID: 0}
-  coinCountClip: {fileID: 0}
-  winSmallClip: {fileID: 0}
-  winJackpotClip: {fileID: 0}
+  buttonClickClip: {fileID: 8300000, guid: 20053554c1a713f43b698fa64d19f5bc, type: 3}
+  leverPullClip: {fileID: 8300000, guid: d01908e278afe42429f6a83d876dd174, type: 3}
+  reelSpinLoopClip: {fileID: 8300000, guid: 9d5f148a180d0b74f8de51c68febb16e, type: 3}
+  reelStopClip: {fileID: 8300000, guid: 3d4632c4c51be8a4380d552cfc3f09e1, type: 3}
+  coinCountClip: {fileID: 8300000, guid: 2ebdb965a7a49d247b6f57c7c4697b15, type: 3}
+  winSmallClip: {fileID: 8300000, guid: 18d9778544daf784784b3bda6d12cd35, type: 3}
+  winJackpotClip: {fileID: 8300000, guid: 475ae70e7a907c640909a71f23dec35a, type: 3}
+  bonusTriggerClip: {fileID: 8300000, guid: fb20920f8dac8c84bbf595e1895d6cdb, type: 3}
 --- !u!4 &1424462775
 Transform:
   m_ObjectHideFlags: 0
